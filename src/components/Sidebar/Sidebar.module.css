@@ -1,0 +1,13 @@
+/*  */
+.item a {
+  margin-left: 20px;
+  font-size: 25px;
+  color: white;
+  text-decoration: none;
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.item a.activeLink {
+  color: gold;
+}

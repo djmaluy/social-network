@@ -1,0 +1,7 @@
+.wrapper {
+  background: #f3904f; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom, #3b4371, #f3904f);
+  background: linear-gradient(to bottom, #3b4371, #f3904f);
+  height: 90vh;
+  padding: 20px;
+}
