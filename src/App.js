@@ -12,7 +12,7 @@ import { Users } from "./components/UsersPage/Users";
 import { Music } from "./components/MusicPage/Music";
 import { Row, Col } from "react-bootstrap";
 
-function App() {
+function App(props) {
   return (
     <div className="wrapper">
       <Navbar />
@@ -22,8 +22,19 @@ function App() {
         </Col>
         <Col sm={10} className="p-0">
           <Switch className="p-0">
-            <Route path="/profile" component={Profile} />
-            <Route path="/dialogs" component={Dialogs} />
+            <Route
+              path="/profile"
+              render={() => <Profile postData={props.postData} />}
+            />
+            <Route
+              path="/dialogs"
+              render={() => (
+                <Dialogs
+                  dialogsData={props.dialogsData}
+                  messagesData={props.messagesData}
+                />
+              )}
+            />
             <Route path="/news" component={News} />
             <Route path="/users" component={Users} />
             <Route path="/music" component={Music} />

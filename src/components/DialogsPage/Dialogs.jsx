@@ -1,37 +1,28 @@
 import React from "react";
 import classes from "./Dialogs.module.css";
-import Button from "@material-ui/core/Button";
-import Icon from "@material-ui/core/Icon";
+import { Message } from "./Message/Message";
+import { DialogItem } from "./DialogItem/DialogItem";
+import { SendMessageButton } from "./SendMessageButton";
+import { Col, Row } from "react-bootstrap";
 
-export const Dialogs = () => {
+export const Dialogs = (props) => {
+  let dialogs = props.dialogsData.map((d) => (
+    <DialogItem name={d.name} id={d.id} key={d.id} />
+  ));
+  let messages = props.messagesData.map((m) => (
+    <Message message={m.message} key={m.id} />
+  ));
   return (
-    <>
-      <h1 className={classes.header}> Dialogs page</h1>
-      <div className={classes.dialogs_items}>
-        <div>
-          <ul>
-            <li>Andrew</li>
-            <li>Oleg</li>
-            <li>Dima</li>
-            <li>Lena</li>
-            <li>Alona</li>
-          </ul>
-        </div>
-        <div>
-          <div className="form-group">
-            <textarea placeholder="Enter your message..."></textarea>
-          </div>
-          <div>
-            <Button
-              variant="contained"
-              color="primary"
-              endIcon={<Icon>send</Icon>}
-            >
-              Send
-            </Button>
-          </div>
-        </div>
-      </div>
-    </>
+    <div className={classes.dialogsWrapper}>
+      <Row className={classes.dialogs}>
+        <Col sm={4} className={classes.dialogsItems}>
+          {dialogs}
+        </Col>
+        <Col sm={8}>
+          {messages}
+          <SendMessageButton />
+        </Col>
+      </Row>
+    </div>
   );
 };

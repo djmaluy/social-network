@@ -10,7 +10,7 @@ export const Post = (props) => {
           alt="ava"
           className={classes.avatar}
         />
-        <span>{props.message}</span>
+        <span>{props.text}</span>
       </div>
     </div>
   );

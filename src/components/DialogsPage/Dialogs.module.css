@@ -1,9 +1,20 @@
-.dialogs_items {
+.dialogsWrapper {
+  background: #004ff9;
+  background: -webkit-linear-gradient(to left, #004ff9, #fff94c);
+  background: linear-gradient(to left, #004ff9, #fff94c);
+  height: 43vw;
+}
+.dialogs {
   display: flex;
   justify-content: space-around;
-  margin-top: 15px;
+  padding: 20px;
 }
 
-.header {
-  text-align: center;
+.dialogsItems a {
+  text-decoration: none;
+}
+
+.dialogsItems a:hover {
+  color: black;
+  font-weight: 500;
 }

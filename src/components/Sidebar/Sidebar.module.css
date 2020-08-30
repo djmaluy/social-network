@@ -11,3 +11,7 @@
 .item a.activeLink {
   color: gold;
 }
+
+.nav {
+  padding: 20px;
+}
