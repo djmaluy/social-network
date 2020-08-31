@@ -24,14 +24,21 @@ function App(props) {
           <Switch className="p-0">
             <Route
               path="/profile"
-              render={() => <Profile postData={props.postData} />}
+              render={() => (
+                <Profile
+                  profilePage={props.state.profilePage}
+                  addPost={props.addPost}
+                  updateNewPostText={props.updateNewPostText}
+                />
+              )}
             />
             <Route
               path="/dialogs"
               render={() => (
                 <Dialogs
-                  dialogsData={props.dialogsData}
-                  messagesData={props.messagesData}
+                  addMessage={props.addMessage}
+                  dialogsPage={props.state.dialogsPage}
+                  updateNewDialogText={props.updateNewDialogText}
                 />
               )}
             />

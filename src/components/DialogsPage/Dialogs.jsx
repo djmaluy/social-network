@@ -6,10 +6,10 @@ import { SendMessageButton } from "./SendMessageButton";
 import { Col, Row } from "react-bootstrap";
 
 export const Dialogs = (props) => {
-  let dialogs = props.dialogsData.map((d) => (
+  let dialogs = props.dialogsPage.dialogsData.map((d) => (
     <DialogItem name={d.name} id={d.id} key={d.id} />
   ));
-  let messages = props.messagesData.map((m) => (
+  let messages = props.dialogsPage.messagesData.map((m) => (
     <Message message={m.message} key={m.id} />
   ));
   return (
@@ -20,7 +20,11 @@ export const Dialogs = (props) => {
         </Col>
         <Col sm={8}>
           {messages}
-          <SendMessageButton />
+          <SendMessageButton
+            addMessage={props.addMessage}
+            newDialogText={props.dialogsPage.newDialogText}
+            updateNewDialogText={props.updateNewDialogText}
+          />
         </Col>
       </Row>
     </div>
