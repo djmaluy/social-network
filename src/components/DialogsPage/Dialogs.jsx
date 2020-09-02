@@ -21,9 +21,8 @@ export const Dialogs = (props) => {
         <Col sm={8}>
           {messages}
           <SendMessageButton
-            addMessage={props.addMessage}
+            dispatch={props.dispatch}
             newDialogText={props.dialogsPage.newDialogText}
-            updateNewDialogText={props.updateNewDialogText}
           />
         </Col>
       </Row>

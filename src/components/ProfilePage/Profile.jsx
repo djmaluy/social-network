@@ -11,8 +11,7 @@ export const Profile = (props) => {
   return (
     <div className={classes.wrapper}>
       <AddPostButton
-        addPost={props.addPost}
-        updateNewPostText={props.updateNewPostText}
+        dispatch={props.dispatch}
         newPostText={props.profilePage.newPostText}
       />
       <div className="pt-2">

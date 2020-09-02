@@ -1,24 +1,21 @@
 import React from "react";
 import { Button, Icon } from "@material-ui/core";
+import { addPostAC, updateNewPostTextAC } from "../../redux/profileReducer";
 
 export const AddPostButton = (props) => {
-  let newPostElement = React.createRef();
-
   let onAddPost = () => {
-    props.addPost();
-    props.updateNewPostText("");
+    props.dispatch(addPostAC());
   };
 
-  let updateNewPostHandler = () => {
-    let text = newPostElement.current.value;
-    props.updateNewPostText(text);
+  let updateNewPostText = (e) => {
+    let text = e.target.value;
+    props.dispatch(updateNewPostTextAC(text));
   };
   return (
     <>
       <div className="form-group ">
         <textarea
-          onChange={updateNewPostHandler}
-          ref={newPostElement}
+          onChange={updateNewPostText}
           placeholder="Enter your message..."
           value={props.newPostText}
         />

@@ -1,17 +1,18 @@
 import React from "react";
 import { Button, Icon } from "@material-ui/core";
+import {
+  addMessageAC,
+  updateNewDialogTextAC,
+} from "../../redux/dialogsReducer";
 
 export const SendMessageButton = (props) => {
-  let newMessageElement = React.createRef();
-
   let onAddNewMessage = () => {
-    props.addMessage();
-    props.updateNewDialogText("");
+    props.dispatch(addMessageAC());
   };
 
-  let updateNewDialogText = () => {
-    let textNewMessage = newMessageElement.current.value;
-    props.updateNewDialogText(textNewMessage);
+  let updateNewDialogText = (e) => {
+    let textNewMessage = e.target.value;
+    props.dispatch(updateNewDialogTextAC(textNewMessage));
   };
   return (
     <>
@@ -19,7 +20,6 @@ export const SendMessageButton = (props) => {
         <textarea
           value={props.newDialogText}
           onChange={updateNewDialogText}
-          ref={newMessageElement}
           placeholder="Enter your message..."
         />
       </div>
