@@ -2,14 +2,23 @@ import React from "react";
 import classes from "./Dialogs.module.css";
 import { Message } from "./Message/Message";
 import { DialogItem } from "./DialogItem/DialogItem";
-import { SendMessageButton } from "./SendMessageButton";
 import { Col, Row } from "react-bootstrap";
+import { Button, Icon } from "@material-ui/core";
 
 export const Dialogs = (props) => {
-  let dialogs = props.dialogsPage.dialogsData.map((d) => (
+  let onAddNewMessage = () => {
+    props.addMessage();
+  };
+
+  let updateNewDialogText = (e) => {
+    let textNewMessage = e.target.value;
+    props.updateNewDialogText(textNewMessage);
+  };
+  let state = props.dialogsPage;
+  let dialogs = state.dialogsData.map((d) => (
     <DialogItem name={d.name} id={d.id} key={d.id} />
   ));
-  let messages = props.dialogsPage.messagesData.map((m) => (
+  let messages = state.messagesData.map((m) => (
     <Message message={m.message} key={m.id} />
   ));
   return (
@@ -20,10 +29,23 @@ export const Dialogs = (props) => {
         </Col>
         <Col sm={8}>
           {messages}
-          <SendMessageButton
-            dispatch={props.dispatch}
-            newDialogText={props.dialogsPage.newDialogText}
-          />
+          <div className="form-group">
+            <textarea
+              value={props.newDialogText}
+              onChange={updateNewDialogText}
+              placeholder="Enter your message..."
+            />
+          </div>
+          <div>
+            <Button
+              onClick={onAddNewMessage}
+              variant="contained"
+              color="secondary"
+              endIcon={<Icon>send</Icon>}
+            >
+              Send
+            </Button>
+          </div>
         </Col>
       </Row>
     </div>

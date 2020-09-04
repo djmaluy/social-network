@@ -5,21 +5,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 import store from "./redux/redux-store";
+import { Provider } from "react-redux";
 
-export let rerenderEntireTree = (state) => {
-  ReactDOM.render(
-    <BrowserRouter>
-      <App state={state} dispatch={store.dispatch.bind(store)} />
-    </BrowserRouter>,
+ReactDOM.render(
+  <BrowserRouter>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
 
-    document.getElementById("root")
-  );
-  serviceWorker.unregister();
-};
-
-rerenderEntireTree(store.getState());
-
-store.subscribe(() => {
-  let state = store.getState();
-  rerenderEntireTree(state);
-});
+  document.getElementById("root")
+);
+serviceWorker.unregister();
