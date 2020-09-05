@@ -6,11 +6,11 @@ import Switch from "react-bootstrap/esm/Switch";
 import { Route } from "react-router-dom";
 import { News } from "./components/NewsPage/News";
 import "./App.css";
-import { Users } from "./components/UsersPage/Users";
 import { Music } from "./components/MusicPage/Music";
 import { Row, Col } from "react-bootstrap";
 import DialogsContainer from "./components/DialogsPage/DialogsContainer";
 import ProfileContainer from "./components/ProfilePage/ProfileContainer";
+import UsersContainer from "./components/UsersPage/UsersContainer";
 
 function App(props) {
   return (
@@ -25,7 +25,7 @@ function App(props) {
             <Route path="/profile" render={() => <ProfileContainer />} />
             <Route path="/dialogs" render={() => <DialogsContainer />} />
             <Route path="/news" component={News} />
-            <Route path="/users" component={Users} />
+            <Route path="/users" render={() => <UsersContainer />} />
             <Route path="/music" component={Music} />
           </Switch>
         </Col>
