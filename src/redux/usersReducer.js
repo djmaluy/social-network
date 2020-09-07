@@ -4,9 +4,9 @@ export const SET_USERS = "SET_USERS";
 
 let initialState = {
   users: [],
-  pageSize: 5,
+  pageSize: 10,
   totalUsersCount: 0,
-  currentPage: 1,
+  currentPage: 0,
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -36,7 +36,7 @@ const usersReducer = (state = initialState, action) => {
     case SET_USERS: {
       return {
         ...state,
-        users: [...state.users, ...action.users],
+        users: action.users,
       };
     }
     default:

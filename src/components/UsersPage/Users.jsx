@@ -1,33 +1,29 @@
 import React from "react";
 import classes from "./Users.module.css";
-import * as axios from "axios";
+// import * as axios from "axios";
 import userPhoto from "../../assets/images/userPhoto.png";
-import BootstrapPaginator from "react-bootstrap-pagination";
+import Paginator from "../Common/Pagination/Paginator";
 
 class Users extends React.Component {
-  componentDidMount() {
-    axios
-      .get("https://social-network.samuraijs.com/api/1.0/users", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        this.props.setUsers(response.data.items);
-      });
-  }
+  // componentDidMount() {
+  //   axios
+  //     .get("https://social-network.samuraijs.com/api/1.0/users", {
+  //       withCredentials: true,
+  //     })
+  //     .then((response) => {
+  //       this.props.setUsers(response.data.items);
+  //     });
+  // }
 
   render() {
-    let pagesCount = Math.ceil(
-      this.props.totalUsersCount / this.props.pageSize
-    );
+    // let pagesCount = Math.ceil(
+    //   this.props.totalUsersCount / this.props.pageSize
+    // );
 
     return (
       <div className={classes.usersWrapper}>
-        <BootstrapPaginator
-          pagination={this.pagination}
-          limit={10}
-          containerClass="text-center"
-        />
-        {this.props.users.map((u) => (
+        <Paginator />
+        {/* {this.props.users.map((u) => (
           <div key={u.id}>
             <span>
               <div>
@@ -62,7 +58,7 @@ class Users extends React.Component {
               <div>{u.status}</div>
             </span>
           </div>
-        ))}
+        ))} */}
       </div>
     );
   }
