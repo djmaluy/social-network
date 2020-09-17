@@ -1,67 +1,100 @@
-import React from "react";
-import classes from "./Users.module.css";
-// import * as axios from "axios";
-import userPhoto from "../../assets/images/userPhoto.png";
-import Paginator from "../Common/Pagination/Paginator";
+// import React, { Component } from "react";
+// import axios from "axios";
+// import ReactPaginate from "react-paginate";
+// import userPhoto from "../../assets/images/userPhoto.png";
+// import "./Users.css";
+// import Preloader from "../../common/Preloader/Preloader";
 
-class Users extends React.Component {
-  // componentDidMount() {
-  //   axios
-  //     .get("https://social-network.samuraijs.com/api/1.0/users", {
-  //       withCredentials: true,
-  //     })
-  //     .then((response) => {
-  //       this.props.setUsers(response.data.items);
-  //     });
-  // }
+// export default class Users extends Component {
+//   state = {
+//     usersData: [],
+//     pageSize: 15,
+//     currentPage: 1,
+//   };
 
-  render() {
-    // let pagesCount = Math.ceil(
-    //   this.props.totalUsersCount / this.props.pageSize
-    // );
+//   receivedData() {
+//     this.props.toggleIsFetching(true);
+//     axios
+//       .get(
+//         `https://social-network.samuraijs.com/api/1.0/users?page=${this.state.currentPage}&count=${this.state.pageSize}`
+//       )
+//       .then((res) => {
+//         this.props.toggleIsFetching(false);
+//         const users = res.data.items;
 
-    return (
-      <div className={classes.usersWrapper}>
-        <Paginator />
-        {/* {this.props.users.map((u) => (
-          <div key={u.id}>
-            <span>
-              <div>
-                <img
-                  className={classes.usersPhoto}
-                  src={u.photos.small || userPhoto}
-                  alt="avatar"
-                />
-              </div>
-              <div>
-                {u.followed ? (
-                  <button
-                    onClick={() => {
-                      this.props.unfollow(u.id);
-                    }}
-                  >
-                    unFollow
-                  </button>
-                ) : (
-                  <button
-                    onClick={() => {
-                      this.props.follow(u.id);
-                    }}
-                  >
-                    Follow
-                  </button>
-                )}
-              </div>
-            </span>
-            <span>
-              <div>{u.name}</div>
-              <div>{u.status}</div>
-            </span>
-          </div>
-        ))} */}
-      </div>
-    );
-  }
-}
+//         const usersData = users.map((u) => (
+//           <div key={u.id}>
+//             <p>{u.name}</p>
+//             <img
+//               className="usersPhoto"
+//               src={u.photos.small || userPhoto}
+//               alt=""
+//             />
+//             <div>
+//               {u.followed ? (
+//                 <button
+//                   onClick={() => {
+//                     this.props.unfollow(u.id);
+//                   }}
+//                 >
+//                   unFollow
+//                 </button>
+//               ) : (
+//                 <button
+//                   onClick={() => {
+//                     this.props.follow(u.id);
+//                   }}
+//                 >
+//                   Follow
+//                 </button>
+//               )}
+//             </div>
+//             <p>{u.status}</p>
+//           </div>
+//         ));
 
-export default Users;
+//         this.setState({
+//           pageCount: Math.ceil(res.data.totalCount / this.state.pageSize),
+//           usersData,
+//         });
+//       });
+//   }
+//   handlePageClick = (e) => {
+//     const selectedPage = e.selected + 1;
+
+//     this.setState(
+//       {
+//         currentPage: selectedPage,
+//       },
+//       () => {
+//         this.receivedData();
+//       }
+//     );
+//   };
+
+//   componentDidMount() {
+//     this.receivedData();
+//   }
+//   render() {
+//     return (
+//       <>
+//         {" "}
+//         {this.props.isFetching ? <Preloader /> : null}
+//         <div className="usersWrapper">
+//           <ReactPaginate
+//             breakLabel={"..."}
+//             breakClassName={"break-me"}
+//             pageCount={this.state.pageCount}
+//             marginPagesDisplayed={2}
+//             pageRangeDisplayed={5}
+//             onPageChange={this.handlePageClick}
+//             containerClassName={"pagination"}
+//             subContainerClassName={"pages pagination"}
+//             activeClassName={"active"}
+//           />
+//           {this.state.usersData}
+//         </div>
+//       </>
+//     );
+//   }
+// }

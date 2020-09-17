@@ -1,3 +1,14 @@
+.usersPhoto {
+  width: 100px;
+  height: 100px;
+}
+
+.usersWrapper {
+  padding-left: 20px;
+}
+
+/*  Pagination */
+
 .pagination {
   margin: 15px auto;
   display: flex;
