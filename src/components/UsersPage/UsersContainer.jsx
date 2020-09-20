@@ -1,25 +1,21 @@
 import { connect } from "react-redux";
 import React, { Component } from "react";
-import userPhoto from "../../assets/images/userPhoto.png";
 import ReactPaginate from "react-paginate";
-// import Users from "./Users";
 import "./Users.css";
 import {
   setUsers,
   follow,
   unfollow,
   toggleIsFetching,
+  setTotalUsersCount,
+  setCurrentPage,
 } from "../../redux/usersReducer";
 import axios from "axios";
 import Preloader from "../../common/Preloader/Preloader";
+import { Users } from "./Users";
 
 class UsersContainer extends Component {
-  state = {
-    usersData: [],
-    // pageSize: 15,
-    // currentPage: 1,
-  };
-  receivedData() {
+  componentDidMount() {
     this.props.toggleIsFetching(true);
     axios
       .get(
@@ -27,79 +23,48 @@ class UsersContainer extends Component {
       )
       .then((res) => {
         this.props.toggleIsFetching(false);
-        const users = res.data.items;
-
-        const usersData = users.map((u) => (
-          <div key={u.id}>
-            <p>{u.name}</p>
-            <img
-              className="usersPhoto"
-              src={u.photos.small || userPhoto}
-              alt=""
-            />
-            <div>
-              {u.followed ? (
-                <button
-                  onClick={() => {
-                    this.props.unfollow(u.id);
-                  }}
-                >
-                  unFollow
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    this.props.follow(u.id);
-                  }}
-                >
-                  Follow
-                </button>
-              )}
-            </div>
-            <p>{u.status}</p>
-          </div>
-        ));
-
-        this.setState({
-          pageCount: Math.ceil(res.data.totalCount / this.props.pageSize),
-          usersData,
-        });
+        this.props.setUsers(res.data.items);
+        this.props.setTotalUsersCount(
+          res.data.totalCount / this.props.pageSize
+        );
       });
   }
-  handlePageClick = (e) => {
-    const selectedPage = e.selected + 1;
 
-    this.setState(
-      {
-        currentPage: selectedPage,
-      },
-      () => {
-        this.receivedData();
-      }
-    );
+  handlePageClick = (e) => {
+    const currentPage = e.selected + 1;
+    this.props.setCurrentPage(currentPage);
+    this.props.toggleIsFetching(true);
+    axios
+      .get(
+        `https://social-network.samuraijs.com/api/1.0/users?page=${currentPage}&count=${this.props.pageSize}`
+      )
+      .then((res) => {
+        this.props.toggleIsFetching(false);
+        this.props.setUsers(res.data.items);
+      });
   };
 
-  componentDidMount() {
-    this.receivedData();
-  }
   render() {
     return (
       <>
-        {" "}
-        {this.props.isFetching ? <Preloader /> : null}
         <div className="usersWrapper">
           <ReactPaginate
             breakLabel={"..."}
             breakClassName={"break-me"}
-            pageCount={this.state.pageCount}
-            marginPagesDisplayed={2}
+            pageCount={this.props.totalUsersCount}
+            marginPagesDisplayed={4}
             pageRangeDisplayed={5}
             onPageChange={this.handlePageClick}
             containerClassName={"pagination"}
             subContainerClassName={"pages pagination"}
             activeClassName={"active"}
           />
-          {this.state.usersData}
+          {this.props.isFetching ? <Preloader /> : null}
+          <Users
+            users={this.props.users}
+            unfollow={this.props.unfollow}
+            follow={this.props.follow}
+          />
         </div>
       </>
     );
@@ -112,7 +77,6 @@ const mapStateToProps = (state) => {
     totalUsersCount: state.usersPage.totalUsersCount,
     currentPage: state.usersPage.currentPage,
     isFetching: state.usersPage.isFetching,
-    pageCount: state.usersPage.pageCount,
   };
 };
 
@@ -121,4 +85,6 @@ export default connect(mapStateToProps, {
   unfollow,
   setUsers,
   toggleIsFetching,
+  setTotalUsersCount,
+  setCurrentPage,
 })(UsersContainer);

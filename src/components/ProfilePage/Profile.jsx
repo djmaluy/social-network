@@ -18,6 +18,9 @@ export const Profile = (props) => {
   };
   return (
     <div className={classes.wrapper}>
+      <div>
+        <img src={props.profile.photos.large} alt="" />
+      </div>
       <div className="form-group ">
         <textarea
           onChange={onPostChange}
