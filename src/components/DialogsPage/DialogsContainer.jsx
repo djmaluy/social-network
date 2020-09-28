@@ -3,7 +3,6 @@ import {
   updateNewDialogTextAC,
 } from "../../redux/dialogsReducer";
 import { Dialogs } from "./Dialogs";
-
 import { connect } from "react-redux";
 
 const mapStateToProps = (state) => {
