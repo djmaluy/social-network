@@ -1,6 +1,5 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Navbar } from "./components/Navbar/Navbar";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import Switch from "react-bootstrap/esm/Switch";
 import { Route } from "react-router-dom";
@@ -11,11 +10,12 @@ import { Row, Col } from "react-bootstrap";
 import UsersContainer from "./components/UsersPage/UsersContainer";
 import DialogsContainer from "./components/DialogsPage/DialogsContainer";
 import ProfileContainer from "./components/ProfilePage/ProfileContainer";
+import NavbarContainer from "./components/Navbar/NavbarContainer";
 
 function App() {
   return (
     <div className="wrapper">
-      <Navbar />
+      <NavbarContainer />
       <Row>
         <Col sm={2} className="sidebar p-0 m-0">
           <Sidebar />

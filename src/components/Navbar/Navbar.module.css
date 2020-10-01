@@ -1,0 +1,12 @@
+.loginBlock a {
+  color: aliceblue;
+  text-decoration: none;
+}
+
+.loginBlock a:hover {
+  color: gold;
+}
+
+.loginBlock {
+  color: aliceblue;
+}
