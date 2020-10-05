@@ -16,4 +16,19 @@ export const usersAPI = {
         return res.data;
       });
   },
+  unfollow(id) {
+    return instance.delete(`follow/${id}`);
+  },
+  follow(id) {
+    return instance.post(`follow/${id}`);
+  },
+  getProfile(userId) {
+    return instance.get(`profile/${userId}`);
+  },
+};
+
+export const authAPI = {
+  getUserData() {
+    return instance.get(`auth/me`);
+  },
 };
