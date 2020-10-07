@@ -11,6 +11,7 @@ import UsersContainer from "./components/UsersPage/UsersContainer";
 import DialogsContainer from "./components/DialogsPage/DialogsContainer";
 import ProfileContainer from "./components/ProfilePage/ProfileContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
+import { Login } from "./components/Login/Login";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             <Route path="/news" component={News} />
             <Route path="/users" render={() => <UsersContainer />} />
             <Route path="/music" component={Music} />
+            <Route path="/login" component={Login} />
           </Switch>
         </Col>
       </Row>

@@ -2,6 +2,7 @@ import React from "react";
 import { addPost, updateNewPostText } from "../../redux/profileReducer";
 import { connect } from "react-redux";
 import MyPosts from "./MyPosts";
+import { compose } from "redux";
 
 export const MyPostsContainer = (props) => {
   let state = props.store.getState();
@@ -30,7 +31,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, {
-  addPost,
-  updateNewPostText,
-})(MyPosts);
+export default compose(
+  connect(mapStateToProps, {
+    addPost,
+    updateNewPostText,
+  })
+)(MyPosts);

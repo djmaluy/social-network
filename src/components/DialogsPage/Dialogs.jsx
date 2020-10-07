@@ -21,6 +21,7 @@ export const Dialogs = (props) => {
   let messages = state.messagesData.map((m) => (
     <Message message={m.message} key={m.id} />
   ));
+
   return (
     <div className={classes.dialogsWrapper}>
       <Row className={classes.dialogs}>
