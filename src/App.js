@@ -11,7 +11,7 @@ import UsersContainer from "./components/UsersPage/UsersContainer";
 import DialogsContainer from "./components/DialogsPage/DialogsContainer";
 import ProfileContainer from "./components/ProfilePage/ProfileContainer";
 import NavbarContainer from "./components/Navbar/NavbarContainer";
-import { Login } from "./components/Login/Login";
+import Login from "./components/Login/Login";
 
 function App() {
   return (
