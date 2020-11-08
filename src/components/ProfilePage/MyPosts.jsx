@@ -1,38 +1,21 @@
 import React from "react";
 import classes from "./Profile.module.css";
 import { Post } from "./Post/Post";
-import { Button, Icon } from "@material-ui/core";
+import { Field, reduxForm } from "redux-form";
+import { required, maxLength } from "../../utils/validators";
+import { Element } from "../../common/FormsControl/FormControl";
 
 const MyPosts = (props) => {
   let posts = props.postData.map((post) => (
     <Post text={post.text} key={post.id} profile={props.profile} />
   ));
-  let onAddPost = () => {
-    props.addPost();
-  };
 
-  let onPostChange = (e) => {
-    let text = e.target.value;
-    props.updateNewPostText(text);
+  let addNewPost = (values) => {
+    props.addPost(values.newPostText);
   };
-
   return (
     <div className={classes.wrapper}>
-      <div className="form-group ">
-        <textarea
-          onChange={onPostChange}
-          placeholder="Enter your message..."
-          value={props.newPostText}
-        />
-      </div>
-      <Button
-        onClick={onAddPost}
-        variant="contained"
-        color="primary"
-        endIcon={<Icon>send</Icon>}
-      >
-        Add post
-      </Button>
+      <AddNewPostRedux onSubmit={addNewPost} />
       <div className="pt-2">
         <h3 style={{ color: "white" }}>My posts </h3>
         {posts}
@@ -40,5 +23,26 @@ const MyPosts = (props) => {
     </div>
   );
 };
+
+const maxLength15 = maxLength(15);
+const Textarea = Element("textarea");
+
+const AddNewPost = (props) => {
+  return (
+    <form onSubmit={props.handleSubmit}>
+      <div className="form-group ">
+        <Field
+          component={Textarea}
+          name="newPostText"
+          placeholder="Enter your message..."
+          validate={[required, maxLength15]}
+        />
+      </div>
+      <button>Add post</button>
+    </form>
+  );
+};
+
+const AddNewPostRedux = reduxForm({ form: "profileAddNewPost" })(AddNewPost);
 
 export default MyPosts;

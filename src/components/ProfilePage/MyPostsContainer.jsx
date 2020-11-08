@@ -1,22 +1,17 @@
 import React from "react";
-import { addPost, updateNewPostText } from "../../redux/profileReducer";
+import { addPost } from "../../redux/profileReducer";
 import { connect } from "react-redux";
 import MyPosts from "./MyPosts";
 import { compose } from "redux";
 
 export const MyPostsContainer = (props) => {
   let state = props.store.getState();
-  let onAddPost = () => {
-    props.store.dispatch(addPost());
-  };
-
-  let onPostChange = (text) => {
-    props.store.dispatch(updateNewPostText(text));
+  let onAddPost = (newPostText) => {
+    props.store.dispatch(addPost(newPostText));
   };
 
   return (
     <MyPosts
-      updateNewPostText={onPostChange}
       addPost={onAddPost}
       postData={state.profilePge.postData}
       newPostText={state.profilePge.newPostText}
@@ -34,6 +29,5 @@ const mapStateToProps = (state) => {
 export default compose(
   connect(mapStateToProps, {
     addPost,
-    updateNewPostText,
   })
 )(MyPosts);
