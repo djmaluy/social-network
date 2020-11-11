@@ -8,7 +8,9 @@ export const Navbar = (props) => {
       <div className="navbar-brand ">My social network</div>
       <div className={classes.loginBlock}>
         {props.isAuth ? (
-          props.login
+          <div>
+            {props.login} <button onClick={props.logout}>Logout</button>
+          </div>
         ) : (
           <NavLink to={"/login"} color="secondary">
             Login
