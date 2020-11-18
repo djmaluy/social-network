@@ -1,4 +1,5 @@
 import { usersAPI } from "../api/api";
+import { updateObjInArray } from "../utils/objectHelpers";
 
 export const FOLLOW = "FOLLOW";
 export const UNFOLLOW = "UNFOLLOW";
@@ -20,22 +21,16 @@ const usersReducer = (state = initialState, action) => {
     case FOLLOW: {
       return {
         ...state,
-        users: state.users.map((u) => {
-          if (u.id === action.userId) {
-            return { ...u, followed: true };
-          }
-          return u;
+        users: updateObjInArray(state.users, action.userId, "id", {
+          followed: true,
         }),
       };
     }
     case UNFOLLOW: {
       return {
         ...state,
-        users: state.users.map((u) => {
-          if (u.id === action.userId) {
-            return { ...u, followed: false };
-          }
-          return u;
+        users: updateObjInArray(state.users, action.userId, "id", {
+          followed: false,
         }),
       };
     }
@@ -96,31 +91,31 @@ export const setCurrentPage = (currentPage) => ({
 });
 
 export const getUsers = (currentPage, pageSize) => {
-  return (dispatch) => {
+  return async (dispatch) => {
     dispatch(toggleIsFetching(true));
-    usersAPI.getUsers(currentPage, pageSize).then((data) => {
-      dispatch(toggleIsFetching(false));
-      dispatch(setUsers(data.items));
-      dispatch(setTotalUsersCount(data.totalCount / pageSize));
-    });
+    let data = await usersAPI.getUsers(currentPage, pageSize);
+
+    dispatch(toggleIsFetching(false));
+    dispatch(setUsers(data.items));
+    dispatch(setTotalUsersCount(data.totalCount / pageSize));
   };
 };
 export const follow = (userId) => {
-  return (dispatch) => {
-    usersAPI.follow(userId).then((res) => {
-      if (res.data.resultCode === 0) {
-        dispatch(followSuccess(userId));
-      }
-    });
+  return async (dispatch) => {
+    let res = await usersAPI.follow(userId);
+
+    if (res.data.resultCode === 0) {
+      dispatch(followSuccess(userId));
+    }
   };
 };
 export const unfollow = (userId) => {
-  return (dispatch) => {
-    usersAPI.unfollow(userId).then((res) => {
-      if (res.data.resultCode === 0) {
-        dispatch(unfollowSuccess(userId));
-      }
-    });
+  return async (dispatch) => {
+    let res = await usersAPI.unfollow(userId);
+
+    if (res.data.resultCode === 0) {
+      dispatch(unfollowSuccess(userId));
+    }
   };
 };
 

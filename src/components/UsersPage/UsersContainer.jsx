@@ -9,8 +9,15 @@ import {
   getUsers,
 } from "../../redux/usersReducer";
 import Preloader from "../../common/Preloader/Preloader";
-import { Users } from "./Users";
+import { User } from "./User";
 import { compose } from "redux";
+import {
+  getAllUsers,
+  getCurrentPage,
+  getIsFetching,
+  getPageSize,
+  getTotalUsersCount,
+} from "../../redux/users-selectors";
 
 class UsersContainer extends Component {
   componentDidMount() {
@@ -38,7 +45,7 @@ class UsersContainer extends Component {
             activeClassName={"active"}
           />
           {this.props.isFetching ? <Preloader /> : null}
-          <Users
+          <User
             users={this.props.users}
             unfollow={this.props.unfollow}
             follow={this.props.follow}
@@ -48,13 +55,14 @@ class UsersContainer extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
-    users: state.usersPage.users,
-    pageSize: state.usersPage.pageSize,
-    totalUsersCount: state.usersPage.totalUsersCount,
-    currentPage: state.usersPage.currentPage,
-    isFetching: state.usersPage.isFetching,
+    users: getAllUsers(state),
+    pageSize: getPageSize(state),
+    totalUsersCount: getTotalUsersCount(state),
+    currentPage: getCurrentPage(state),
+    isFetching: getIsFetching(state),
   };
 };
 

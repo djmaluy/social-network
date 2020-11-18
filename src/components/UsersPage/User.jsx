@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import userPhoto from "../../assets/images/userPhoto.png";
 
-export const Users = (props) => {
+export const User = (props) => {
   return (
     <div>
       {props.users.map((u) => (
