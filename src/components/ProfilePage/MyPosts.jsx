@@ -6,7 +6,6 @@ import { required, maxLength } from "../../utils/validators";
 import { Element } from "../../common/FormsControl/FormControl";
 
 const MyPosts = React.memo((props) => {
-  console.log("render");
   let posts = props.postData.map((post) => (
     <Post text={post.text} key={post.id} profile={props.profile} />
   ));

@@ -5,3 +5,11 @@
   height: 90vh;
   padding: 20px;
 }
+
+.userAvatar {
+  max-width: 200px;
+}
+
+.contacts {
+  padding-left: 25px;
+}
