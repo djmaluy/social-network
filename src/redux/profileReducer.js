@@ -1,3 +1,4 @@
+import { stopSubmit } from "redux-form";
 import { usersAPI, profileAPI } from "../api/api";
 
 const ADD_POST = "ADD-POST";
@@ -80,23 +81,36 @@ export const savePhotoSuccess = (photos) => ({
 
 /* thunk creators */
 export const getProfile = (userId) => async (dispatch) => {
-  let res = await usersAPI.getProfile(userId);
+  const res = await usersAPI.getProfile(userId);
   dispatch(setUsersProfile(res.data));
 };
 
 export const getStatus = (userId) => async (dispatch) => {
-  let res = await profileAPI.getStatus(userId);
+  const res = await profileAPI.getStatus(userId);
   dispatch(setStatus(res.data));
 };
 export const updateStatus = (status) => async (dispatch) => {
-  let res = await profileAPI.updateStatus(status);
-  if (res.data.resultCode === 0) dispatch(setStatus(status));
+  const res = await profileAPI.updateStatus(status);
+  if (res.data.resultCode === 0) {
+    dispatch(setStatus(status));
+  }
 };
 
 export const savePhoto = (file) => async (dispatch) => {
-  let res = await profileAPI.savePhoto(file);
-  if (res.data.resultCode === 0) console.log(res);
-  dispatch(savePhotoSuccess(res.data.data.photos));
+  const res = await profileAPI.savePhoto(file);
+  if (res.data.resultCode === 0) {
+    dispatch(savePhotoSuccess(res.data.data.photos));
+  }
+};
+
+export const saveProfile = (profile) => async (dispatch, getState) => {
+  const userId = getState().auth.userId;
+  const res = await profileAPI.saveProfile(profile);
+  if (res.data.resultCode === 0) {
+    dispatch(getProfile(userId));
+  } else {
+    dispatch(stopSubmit("editProfileData", { _error: res.data.messages[0] }));
+  }
 };
 
 export default profileReducer;

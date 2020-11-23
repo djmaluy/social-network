@@ -13,3 +13,10 @@
 .contacts {
   padding-left: 25px;
 }
+
+.formSummaryError {
+  border: red 1px solid;
+  padding: 5px;
+  color: red;
+  margin: 5px;
+}
