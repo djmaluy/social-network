@@ -2,7 +2,7 @@ import React, { Component, Suspense } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Sidebar } from "./components/Sidebar/Sidebar";
 import Switch from "react-bootstrap/esm/Switch";
-import { Route, withRouter } from "react-router-dom";
+import { Redirect, Route, withRouter } from "react-router-dom";
 import { News } from "./components/NewsPage/News";
 import "./App.css";
 import { Music } from "./components/MusicPage/Music";
@@ -14,6 +14,7 @@ import { connect } from "react-redux";
 import { initializeApp } from "./redux/appReducer";
 import { compose } from "redux";
 import Preloader from "./common/Preloader/Preloader";
+import PageNotFound from "./components/PageNotFound/PageNotFound";
 
 const DialogsContainer = React.lazy(() =>
   import("./components/DialogsPage/DialogsContainer")
@@ -23,8 +24,18 @@ const ProfileContainer = React.lazy(() =>
 );
 
 class App extends Component {
+  catchAllUnhandledErrors = (reason, promise) => {
+    alert("some error");
+  };
   componentDidMount() {
     this.props.initializeApp();
+    window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);
+  }
+  componentWillMount() {
+    window.removeEventListener(
+      "unhandledrejection",
+      this.catchAllUnhandledErrors
+    );
   }
   render() {
     if (!this.props.initialized) {
@@ -41,6 +52,9 @@ class App extends Component {
             </Col>
             <Col sm={10} className="p-0">
               <Switch className="p-0">
+                <Route exact path="/">
+                  <Redirect to="/profile" />
+                </Route>
                 <Suspense fallback={<div>Загрузка...</div>}>
                   <Route
                     path="/profile/:userId?"
@@ -52,6 +66,7 @@ class App extends Component {
                 <Route path="/users" render={() => <UsersContainer />} />
                 <Route path="/music" component={Music} />{" "}
                 <Route path="/login" component={Login} />
+                <Route component={PageNotFound} />
               </Switch>
             </Col>
           </Row>

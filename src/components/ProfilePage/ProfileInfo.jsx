@@ -26,8 +26,9 @@ const ProfileInfo = ({
   };
 
   const onSubmit = (formData) => {
-    saveProfile(formData);
-    // setEditMode(false);
+    saveProfile(formData).then(() => {
+      setEditMode(false);
+    });
   };
 
   return (
@@ -109,7 +110,7 @@ const ProfileData = ({ profile, isOwner, goToEditMode }) => {
 const Contact = ({ contactTitle, contactValue }) => {
   return (
     <div className={classes.contacts}>
-      <b>{contactTitle}:</b>
+      <b>{contactTitle}:</b>&nbsp;
       {contactValue}
     </div>
   );

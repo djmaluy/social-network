@@ -110,6 +110,7 @@ export const saveProfile = (profile) => async (dispatch, getState) => {
     dispatch(getProfile(userId));
   } else {
     dispatch(stopSubmit("editProfileData", { _error: res.data.messages[0] }));
+    return Promise.reject(res.data.messages[0]);
   }
 };
 
