@@ -2,11 +2,15 @@ import { getUserData } from "./authReducer";
 
 export const INITIALIZED_SUCCESS = "INITIALIZED-SUCCESS";
 
-let initialState = {
-  initializated: false,
+export type initialStateType = {
+  initialized: boolean
+}
+
+let initialState:initialStateType = {
+  initialized: false
 };
 
-const appReducer = (state = initialState, action) => {
+const appReducer = (state = initialState, action: any):initialStateType => {
   switch (action.type) {
     case INITIALIZED_SUCCESS: {
       return {
@@ -22,13 +26,17 @@ const appReducer = (state = initialState, action) => {
 
 /* Action creators */
 
-export const setInitializedSuccess = () => ({
+type setInitializedSuccessActionType = {
+  type: typeof INITIALIZED_SUCCESS
+}
+
+export const setInitializedSuccess = ():setInitializedSuccessActionType => ({
   type: INITIALIZED_SUCCESS,
 });
 
 /* thunk creator */
 export const initializeApp = () => {
-  return (dispatch) => {
+  return (dispatch: any) => {
     let promise = dispatch(getUserData());
 
     Promise.all([promise]).then(() => {

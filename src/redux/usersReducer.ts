@@ -1,3 +1,4 @@
+import { setStatus } from './profileReducer';
 import { usersAPI } from "../api/api";
 import { updateObjInArray } from "../utils/objectHelpers";
 
@@ -8,6 +9,12 @@ export const TOGGLE_IS_FETCHING = "TOGGLE_IS_FETCHING";
 export const SET_TOTAL_USERS_COUNT = "SET_TOTAL_USERS_COUNT";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 
+type usersType = {
+  id:number
+  name:string
+  status: string
+  photos: photosType
+}
 let initialState = {
   users: [],
   pageSize: 15,
@@ -16,7 +23,8 @@ let initialState = {
   totalUsersCount: 0,
 };
 
-const usersReducer = (state = initialState, action) => {
+type initialStateType = typeof initialState
+const usersReducer = (state = initialState, action:any) => {
   switch (action.type) {
     case FOLLOW: {
       return {
@@ -65,11 +73,19 @@ const usersReducer = (state = initialState, action) => {
 
 /* Action creators */
 
-export const followSuccess = (userId) => ({
+type followSuccessActionType = {
+  type: typeof FOLLOW
+  userId:number
+}
+export const followSuccess = (userId:number):followSuccessActionType => ({
   type: FOLLOW,
   userId,
 });
-export const unfollowSuccess = (userId) => ({
+type unfollowSuccessActionType ={
+  type: typeof UNFOLLOW
+  userId:number
+}
+export const unfollowSuccess = (userId:number):unfollowSuccessActionType => ({
   type: UNFOLLOW,
   userId,
 });
@@ -77,21 +93,33 @@ export const setUsers = (users) => ({
   type: SET_USERS,
   users,
 });
-export const toggleIsFetching = (isFetching) => ({
+type toggleIsFetchingActionType = {
+  type: typeof TOGGLE_IS_FETCHING
+  isFetching: boolean
+}
+export const toggleIsFetching = (isFetching:boolean):toggleIsFetchingActionType => ({
   type: TOGGLE_IS_FETCHING,
-  isFetching: isFetching,
+  isFetching
 });
-export const setTotalUsersCount = (totalUsersCount) => ({
+type setTotalUsersCountActionType = {
+  type: typeof SET_TOTAL_USERS_COUNT
+  totalUsersCount:number
+}
+export const setTotalUsersCount = (totalUsersCount:number):setTotalUsersCountActionType => ({
   type: SET_TOTAL_USERS_COUNT,
   totalUsersCount,
 });
-export const setCurrentPage = (currentPage) => ({
+type setCurrentPageActionType = {
+  type: typeof SET_CURRENT_PAGE
+  currentPage:number
+}
+export const setCurrentPage = (currentPage:number):setCurrentPageActionType => ({
   type: SET_CURRENT_PAGE,
   currentPage,
 });
 
-export const getUsers = (currentPage, pageSize) => {
-  return async (dispatch) => {
+export const getUsers = (currentPage:number, pageSize:number) => {
+  return async (dispatch:any) => {
     dispatch(toggleIsFetching(true));
     let data = await usersAPI.getUsers(currentPage, pageSize);
 
@@ -100,8 +128,8 @@ export const getUsers = (currentPage, pageSize) => {
     dispatch(setTotalUsersCount(data.totalCount / pageSize));
   };
 };
-export const follow = (userId) => {
-  return async (dispatch) => {
+export const follow = (userId:number) => {
+  return async (dispatch:any) => {
     let res = await usersAPI.follow(userId);
 
     if (res.data.resultCode === 0) {
@@ -109,8 +137,8 @@ export const follow = (userId) => {
     }
   };
 };
-export const unfollow = (userId) => {
-  return async (dispatch) => {
+export const unfollow = (userId:number) => {
+  return async (dispatch:any) => {
     let res = await usersAPI.unfollow(userId);
 
     if (res.data.resultCode === 0) {
