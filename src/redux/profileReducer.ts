@@ -1,3 +1,4 @@
+import { PostDataType, ProfileType, PhotosType } from './../types/types';
 import { stopSubmit } from "redux-form";
 import { usersAPI, profileAPI } from "../api/api";
 
@@ -7,39 +8,14 @@ const SET_STATUS = "SET_STATUS";
 const UPDATE_STATUS = "UPDATE_STATUS";
 const SAVE_PHOTO_SUCCESS = "SAVE_PHOTO_SUCCESS";
 
-type postDataType = {
-  id:number
-  text: string
-}
-type contactsType = {
-  github: string
-  vk: string
-  facebook: string
-  instagram: string
-  twitter: string
-  website: string
-  youtube: string
-  mainLink: string
-}
-type photosType = {
-  small: string | null
-  large: string | null
-}
-type profileType={
-  userId: number
-  lookingForAJob: boolean
-  lookingForAJobDescription: string
-  fullName: string
-  contacts: contactsType
-  photos: photosType
-}
+
 let initialState = {
   postData: [
     { id: 1, text: "hi" },
     { id: 2, text: "hi-hi" },
     { id: 3, text: "yo" },
-  ] as Array<postDataType>,
-  profile: null as profileType | null,
+  ] as Array<PostDataType>,
+  profile: null as ProfileType | null,
   status: '',
   newPostText: ''
 };
@@ -80,7 +56,7 @@ const profileReducer = (state = initialState, action:any):initialStateType => {
     case SAVE_PHOTO_SUCCESS: {
       return {
         ...state,
-        profile: { ...state.profile, photos: action.photos } as profileType,
+        profile: { ...state.profile, photos: action.photos } as ProfileType,
       };
     }
     default:
@@ -93,15 +69,15 @@ type addPostActionType = {
   type: typeof ADD_POST
   newPostText:string
 }
-export const addPost = (newPostText:string):addPostActionType => ({
+export const addPost = (newPostText:string): addPostActionType => ({
   type: ADD_POST,
   newPostText,
 });
 type setUsersProfileActionType = {
   type: typeof SET_USERS_PROFILE
-  profile:profileType
+  profile: ProfileType
 }
-export const setUsersProfile = (profile:profileType):setUsersProfileActionType => ({
+export const setUsersProfile = (profile: ProfileType):setUsersProfileActionType => ({
   type: SET_USERS_PROFILE,
   profile,
 });
@@ -109,15 +85,15 @@ type setStatusActionType = {
   type: typeof SET_STATUS
   status: string
 }
-export const setStatus = (status:string):setStatusActionType => ({
+export const setStatus = (status:string): setStatusActionType => ({
   type: SET_STATUS,
   status,
 });
 type savePhotoSuccessActionType = {
   type: typeof SAVE_PHOTO_SUCCESS
-  photos:photosType
+  photos: PhotosType
 }
-export const savePhotoSuccess = (photos:photosType):savePhotoSuccessActionType => ({
+export const savePhotoSuccess = (photos: PhotosType):savePhotoSuccessActionType => ({
   type: SAVE_PHOTO_SUCCESS,
   photos,
 });
@@ -146,7 +122,7 @@ export const savePhoto = (file:any) => async (dispatch:any) => {
   }
 }; 
 
-export const saveProfile = (profile:profileType) => async (dispatch:any, getState:any) => {
+export const saveProfile = (profile: ProfileType) => async (dispatch:any, getState:any) => {
   const userId = getState().auth.userId;
   const res = await profileAPI.saveProfile(profile);
   if (res.data.resultCode === 0) {

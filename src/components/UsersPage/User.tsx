@@ -1,11 +1,18 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import userPhoto from "../../assets/images/userPhoto.png";
+import {  UsersType } from "../../types/types";
 
-export const User = (props) => {
+type UserProps = {
+  users: Array<UsersType>
+  unfollow: (UserId: number) => void
+  follow: (UserId: number) => void
+  };
+  
+export const User: React.FC <UserProps> = ({ users, unfollow, follow }) => {
   return (
     <div>
-      {props.users.map((u) => (
+      {users.map((u) => (
         <div key={u.id}>
           <p>{u.name}</p>
           <p>{u.status}</p>
@@ -20,7 +27,7 @@ export const User = (props) => {
             {u.followed ? (
               <button
                 onClick={() => {
-                  props.unfollow(u.id);
+                  unfollow(u.id);
                 }}
               >
                 unFollow
@@ -28,7 +35,7 @@ export const User = (props) => {
             ) : (
               <button
                 onClick={() => {
-                  props.follow(u.id);
+                  follow(u.id);
                 }}
               >
                 Follow
