@@ -24,9 +24,6 @@ const ProfileContainer = React.lazy(() =>
 );
 
 class App extends Component {
-  catchAllUnhandledErrors = (reason, promise) => {
-    alert("some error");
-  };
   componentDidMount() {
     this.props.initializeApp();
     window.addEventListener("unhandledrejection", this.catchAllUnhandledErrors);

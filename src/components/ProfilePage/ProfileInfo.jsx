@@ -29,6 +29,7 @@ const ProfileInfo = ({
     saveProfile(formData).then(() => {
       setEditMode(false);
     });
+
   };
 
   return (

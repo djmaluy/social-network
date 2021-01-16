@@ -77,6 +77,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     totalUsersCount: getTotalUsersCount(state),
     currentPage: getCurrentPage(state),
     isFetching: getIsFetching(state),
+    
     };
 };
 
