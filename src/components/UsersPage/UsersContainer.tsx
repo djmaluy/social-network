@@ -77,13 +77,12 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
     totalUsersCount: getTotalUsersCount(state),
     currentPage: getCurrentPage(state),
     isFetching: getIsFetching(state),
-    
+     
     };
 };
 
 export default compose(
-  // TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState
-  connect(
+    connect<MapStatePropsType, MapDispatchPropsType, {}, AppStateType>(
     mapStateToProps, {
     follow,
     unfollow,

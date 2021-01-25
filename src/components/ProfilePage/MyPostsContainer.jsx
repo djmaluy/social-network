@@ -13,7 +13,8 @@ export const MyPostsContainer = (props) => {
   return (
     <MyPosts
       addPost={onAddPost}
-      postData={state.profilePge.postData}
+      postD
+      ata={state.profilePge.postData}
       newPostText={state.profilePge.newPostText}
     />
   );

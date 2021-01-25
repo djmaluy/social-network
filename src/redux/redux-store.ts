@@ -17,7 +17,7 @@ let rootReducer = combineReducers({
 });
 
 type rootReducerType = typeof rootReducer
-export type AppStateType = ReturnType<rootReducerType>
+export type AppStateType = ReturnType<rootReducerType> // export our all State of whole App
 
 //@ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose

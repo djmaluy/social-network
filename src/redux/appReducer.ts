@@ -1,3 +1,4 @@
+// import { Dispatch } from "react";
 import { getUserData } from "./authReducer";
 
 export const INITIALIZED_SUCCESS = "INITIALIZED-SUCCESS";
@@ -10,7 +11,7 @@ let initialState: InitialStateType = {
   initialized: false,
 };
 
-const appReducer = (state = initialState, action: any): InitialStateType  => {
+const appReducer = (state = initialState, action: InitializedSuccessActionType): InitialStateType  => {
   switch (action.type) {
     case INITIALIZED_SUCCESS: {
       return {
@@ -35,6 +36,7 @@ export const setInitializedSuccess = (): InitializedSuccessActionType => ({
 });
 
 /* thunk creator */
+// type DispatchType = Dispatch<InitializedSuccessActionType>
 export const initializeApp = () => {
   return (dispatch: any) => {
     let promise = dispatch(getUserData());
