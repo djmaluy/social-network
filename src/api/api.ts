@@ -9,6 +9,11 @@ const instance = axios.create({
   },
 });
 
+type ProfileStatusFollowUnfollowType = {
+  resultCode: ResultCodesEnum 
+  messages: Array<string>
+  data: {}
+}
 export const usersAPI = {
   getUsers(currentPage: number, pageSize: number) {
     return instance
@@ -18,27 +23,22 @@ export const usersAPI = {
       });
   },
   unfollow(id: number) {
-    return instance.delete(`follow/${id}`);
+    return instance.delete<ProfileStatusFollowUnfollowType>(`follow/${id}`).then(res => res.data)
   },
   follow(id: number) {
-    return instance.post(`follow/${id}`);
-  },
-  getProfile(userId: number) {
-    console.warn("This method is deprecated. Please, use profileAPI");
-
-    return profileAPI.getProfile(userId);
+    return instance.post<ProfileStatusFollowUnfollowType>(`follow/${id}`).then(res => res.data)
   },
 };
 
 export const profileAPI = {
   getProfile(userId: number) { 
-    return instance.get(`profile/${userId}`);
+    return instance.get<ProfileType>(`profile/${userId}`).then(res => res.data)
   },
   getStatus(userId: number) {
-    return instance.get(`profile/status/${userId}`);
+    return instance.get<string>(`profile/status/${userId}`).then(res => res.data)
   },
   updateStatus(status: string) {
-    return instance.put(`profile/status`, { status: status });
+    return instance.put<ProfileStatusFollowUnfollowType>(`profile/status`, { status: status }).then(res => res.data)
   },
   savePhoto(photoFile: any) {
     const formData = new FormData();
@@ -50,35 +50,36 @@ export const profileAPI = {
     });
   },
   saveProfile(profile: ProfileType) {
-    return instance.put(`profile`, profile);
+    return instance.put<ProfileStatusFollowUnfollowType>(`profile`, profile).then(res => res.data)
   },
 };
 
-export enum ResultCodeEnum {
+export enum ResultCodesEnum {
   Success = 0,
   Error = 1,
-  CaptchIsRequired = 10
-}
-
+  }
 export enum ResultCodeForCaptcha {
     CaptchIsRequired = 10
 }
-
 type LoginDataType = {
   data: {
     UserId: number
   }
-  resultCode: ResultCodeEnum | ResultCodeForCaptcha
+  resultCode: ResultCodesEnum | ResultCodeForCaptcha
   messages: Array<string>
 }
-
+type LogoutDataType = {
+  resultCode: ResultCodesEnum 
+  messages: Array<string>
+  data: {}
+}
 type getUserDataType = {
   data: {
     id: number
     email: string
     login: string
   }
-  resultCode: ResultCodeEnum
+  resultCode: ResultCodesEnum 
   messages: Array<string>
 }
 export const authAPI = {
@@ -94,12 +95,15 @@ export const authAPI = {
     }).then(res => res.data)
   },
   logout() {
-    return instance.delete(`auth/login`).then(res => res.data)
+    return instance.delete<LogoutDataType>(`auth/login`).then(res => res.data)
   },
 };
 
+type CaptchaDataType = {
+  url: string
+}
 export const securityAPI = {
   getCaptcha() {
-    return instance.get(`security/get-captcha-url`);
+    return instance.get<CaptchaDataType>(`security/get-captcha-url`).then(res => res.data)
   },
 };

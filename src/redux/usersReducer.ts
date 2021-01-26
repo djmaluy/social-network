@@ -1,7 +1,7 @@
 import { AppStateType } from './../../social-network/src/redux/redux-store';
 
 import { UsersType } from './../../social-network/src/types/types';
-import { usersAPI } from "../api/api";
+import { ResultCodesEnum, usersAPI } from "../api/api";
 import { updateObjInArray } from "../utils/objectHelpers";
 import { ThunkAction } from 'redux-thunk';
 import { Dispatch } from 'react';
@@ -147,17 +147,17 @@ export const getUsers = (currentPage: number, pageSize: number): ThunkType  => {
 };
 
 export const follow = (userId: number): ThunkType => async (dispatch: DispatchType) => {
-    const res = await usersAPI.follow(userId);
+    const followData = await usersAPI.follow(userId);
 
-    if (res.data.resultCode === 0) {
+    if (followData.resultCode === ResultCodesEnum.Success) {
       dispatch(followSuccess(userId));
     }
   };
 
 export const unfollow = (userId: number): ThunkType => async (dispatch: DispatchType) => {
-    const res = await usersAPI.unfollow(userId);
+    const unfollowData = await usersAPI.unfollow(userId);
 
-    if (res.data.resultCode === 0) {
+    if (unfollowData.resultCode === ResultCodesEnum.Success) {
       dispatch(unfollowSuccess(userId));
     }
   };

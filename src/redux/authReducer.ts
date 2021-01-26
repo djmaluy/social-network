@@ -1,3 +1,4 @@
+import { ResultCodeForCaptcha, ResultCodesEnum } from './../api/api';
 import { AppStateType } from './../../social-network/src/redux/redux-store';
 import { Dispatch } from "react";
 import { stopSubmit } from "redux-form";
@@ -80,13 +81,13 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 ) => {
   const loginData = await authAPI.login(email, password, rememberMe, captcha);
 
-  if (loginData.resultCode === 0) {
+  if (loginData.resultCode === ResultCodesEnum.Success) {
     dispatch(getUserData());
   } else {
-    if (loginData.resultCode === 10) {
+    if (loginData.resultCode === ResultCodeForCaptcha.CaptchIsRequired) {
       dispatch(getCaptchaUrl());
     }
-    let message =
+    const message =
     loginData.messages.length > 0 ? loginData.messages[0] : "some error";
     dispatch(stopSubmit("login", { _error: message }));
   }
@@ -94,13 +95,13 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 
 export const getCaptchaUrl = (): ThunkTypes => async (dispatch: DispatchTypes) => {
   const captchaData = await securityAPI.getCaptcha();
-  const captchaUrl = captchaData.data.url;
+  const captchaUrl = captchaData.url;
   dispatch(getCaptchaUrlSuccess(captchaUrl));
 };
 
 export const logout = (): ThunkTypes => async(dispatch: DispatchTypes) => {
     const logoutData = await authAPI.logout()
-      if (logoutData.resultCode === 0) {
+      if (logoutData.resultCode === ResultCodesEnum.Success) {
         dispatch(setAuthUserData(null, null, null, false));
       }
     }
