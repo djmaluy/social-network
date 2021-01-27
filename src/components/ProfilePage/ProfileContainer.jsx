@@ -1,5 +1,5 @@
 import {
-  setUsersProfile,
+  actions,
   getProfile,
   getStatus,
   updateStatus,
@@ -12,6 +12,8 @@ import Profile from "./Profile";
 import { withRouter } from "react-router-dom";
 // import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import { compose } from "redux";
+
+const setUsersProfile = actions.setUsersProfile;
 
 class ProfileContainer extends Component {
   refreshProfile() {

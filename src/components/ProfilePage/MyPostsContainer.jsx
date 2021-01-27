@@ -1,8 +1,10 @@
 import React from "react";
-import { addPost } from "../../redux/profileReducer";
+import { actions } from "../../redux/profileReducer";
 import { connect } from "react-redux";
 import MyPosts from "./MyPosts";
 import { compose } from "redux";
+
+const addPost = actions.addPost;
 
 export const MyPostsContainer = (props) => {
   let state = props.store.getState();
