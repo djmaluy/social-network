@@ -50,7 +50,7 @@ type ActionsTypes = InferActionsTypes<typeof actions>  // https://habr.com/ru/co
 
 
 export const actions = {
-    addMessageAC: (newMessageText: string) => ({ type: 'ADD_MESSAGE', newMessageText} as const)
+    addMessage: (newMessageText: string) => ({ type: 'ADD_MESSAGE', newMessageText} as const)
 }
 
 

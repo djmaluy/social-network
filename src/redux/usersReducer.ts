@@ -12,9 +12,13 @@ let initialState = {
   currentPage: 1,
   isFetching: false,
   totalUsersCount: 0, 
+  filter: {
+    term: '',
+    friend: null as null | boolean
+  }
 };
-
-type InitialStateType = typeof initialState
+export type FilterType = typeof initialState.filter
+export type InitialStateType = typeof initialState
 
 
 const usersReducer = (state = initialState, action: ActionTypes): InitialStateType => {
@@ -59,6 +63,12 @@ const usersReducer = (state = initialState, action: ActionTypes): InitialStateTy
         currentPage: action.currentPage,
       };
     }
+    case 'SET_FILTER': {
+      return{
+        ...state, 
+        filter: action.payload
+      }
+    }
     default:
       return state;
   }
@@ -74,17 +84,20 @@ export const actions = {
   toggleIsFetching: (isFetching: boolean) => ({ type: 'TOGGLE_IS_FETCHING', isFetching } as const),
   setTotalUsersCount: (totalUsersCount: number) => ({type: 'SET_TOTAL_USERS_COUNT', totalUsersCount } as const),
   setCurrentPage: (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage } as const),
+  setFilter: (filter: FilterType) => ({type: 'SET_FILTER', payload: filter } as const),
 }
 
 // type GetStateType = () => AppStateType
 type ActionTypes = InferActionsTypes<typeof actions>  // https://habr.com/ru/company/alfa/blog/452620/
 type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionTypes>
 
-export const getUsers = (currentPage: number, pageSize: number): ThunkType  => {
+export const getUsers = (currentPage: number, pageSize: number, filter: FilterType): ThunkType  => {
   return async (dispatch) => {
     dispatch(actions.toggleIsFetching(true));
-    const data = await usersAPI.getUsers(currentPage, pageSize);
-
+    dispatch(actions.setFilter(filter));
+    dispatch(actions.setCurrentPage(currentPage))
+    const data = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend);
+    
     dispatch(actions.toggleIsFetching(false));
     dispatch(actions.setUsers(data.items));
     dispatch(actions.setTotalUsersCount(data.totalCount / pageSize));
