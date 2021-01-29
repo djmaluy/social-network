@@ -1,6 +1,6 @@
-import { PhotosType } from '../../social-network/src/types/types';
-import { ProfileType } from './../types/types';
-import { instance, ResponseType  } from './api';
+import { PhotosType } from '../../src/types/types';
+import { ProfileType } from '../../src/types/types';
+import { instance, ResponseType  } from '../api/api';
 
 type SavePhotoResponseDataType = {
   photos: PhotosType
