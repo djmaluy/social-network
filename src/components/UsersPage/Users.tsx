@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import userPhoto from "../../assets/images/userPhoto.png";
 import { FilterType, getUsers} from "../../redux/usersReducer";
 import UsersSearchForm from "./UsersSearchForm";
@@ -24,6 +24,8 @@ export const Users: React.FC <UserProps> = (props) => {
   const filter = useSelector(getUsersFilter)
   
   const dispatch = useDispatch()
+  const history = useHistory()
+
   const unfollow = (UserId: number) => {
     dispatch(unfollow(UserId))
   }
@@ -36,8 +38,15 @@ export const Users: React.FC <UserProps> = (props) => {
   }
   const handlePageClick = (e: any) => {
     const actualPage = e.selected + 1;
-    dispatch(getUsers(actualPage, pageSize, filter))
+    dispatch(getUsers(actualPage, pageSize, filter)) 
   };
+
+  useEffect(() => {
+    history.push({
+      pathname: '/users',
+      search:`?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
+    })
+  }, [filter,currentPage]);
 
   useEffect(() => {
     dispatch(getUsers(currentPage, pageSize, filter))

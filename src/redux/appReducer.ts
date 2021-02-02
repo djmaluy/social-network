@@ -1,10 +1,7 @@
 import { InferActionsTypes } from './redux-store';
-
 import { getUserData } from "./authReducer";
 
-
-
-let initialState = {
+const initialState = {
   initialized: false,
 };
 

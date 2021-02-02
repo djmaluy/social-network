@@ -4,14 +4,25 @@ import { Post } from "./Post/Post";
 import { Field, reduxForm } from "redux-form";
 import { required, maxLength } from "../../utils/validators";
 import { Element } from "../../common/FormsControl/FormControl";
+import { useSelector, useDispatch } from "react-redux";
+import { getPostData } from "../../redux/profile-selectors";
+import { actions } from "../../redux/profileReducer";
 
-const MyPosts = React.memo((props) => {
-  let posts = props.postData.map((post) => (
+export const MyPosts = React.memo((props) => {
+  const postData = useSelector(getPostData);
+  const addPost = actions.addPost;
+  const dispatch = useDispatch();
+
+  let onAddPost = (newPostText) => {
+    dispatch(addPost(newPostText));
+  };
+
+  let posts = postData.map((post) => (
     <Post text={post.text} key={post.id} profile={props.profile} />
   ));
 
   let addNewPost = (values) => {
-    props.addPost(values.newPostText);
+    onAddPost(values.newPostText);
   };
   return (
     <div className={classes.wrapper}>

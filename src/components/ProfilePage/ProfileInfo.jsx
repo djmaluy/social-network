@@ -4,16 +4,16 @@ import ProfileStatusWithHooks from "./ProfileStatus/ProfileStatusWithHooks";
 import userPhoto from "../../assets/images/userPhoto.png";
 import classes from "./Profile.module.css";
 import ProfileDataForm from "./ProfileDataForm";
+import { useSelector, useDispatch } from "react-redux";
+import { getProfile, getStatus } from "../../redux/profile-selectors";
+import { savePhoto, saveProfile } from "../../redux/profileReducer";
 
-const ProfileInfo = ({
-  profile,
-  savePhoto,
-  isOwner,
-  status,
-  saveProfile,
-  ...props
-}) => {
+const ProfileInfo = ({ isOwner, ...props }) => {
   const [editMode, setEditMode] = useState(false);
+  const profile = useSelector(getProfile);
+  const status = useSelector(getStatus);
+
+  const dispatch = useDispatch();
 
   if (!profile) {
     return <Preloader />;
@@ -21,15 +21,14 @@ const ProfileInfo = ({
 
   const onMainPhotoSelected = (e) => {
     if (e.target.files.length) {
-      savePhoto(e.target.files[0]);
+      dispatch(savePhoto(e.target.files[0]));
     }
   };
 
   const onSubmit = (formData) => {
-    saveProfile(formData).then(() => {
+    dispatch(saveProfile(formData)).then(() => {
       setEditMode(false);
     });
-
   };
 
   return (
@@ -43,10 +42,7 @@ const ProfileInfo = ({
           />
 
           {isOwner && <input type="file" onChange={onMainPhotoSelected} />}
-          <ProfileStatusWithHooks
-            status={status}
-            updateStatus={props.updateStatus}
-          />
+          <ProfileStatusWithHooks status={status} />
           {editMode ? (
             <ProfileDataForm
               initialValues={profile}
