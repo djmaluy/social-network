@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import classes from "./Navbar.module.css";
+import classes from "./Navbar.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { getAuthorizedUserId, getLogin } from "../../redux/auth-selectors";
 import { logout } from "../../redux/authReducer";
@@ -31,7 +31,8 @@ export const Navbar = (props) => {
               style={{ backgroundColor: "#87d068" }}
               icon={<UserOutlined />}
             />
-            {login} <Button onClick={logoutCallback}>Logout</Button>
+            <span className={classes.login}>{login}</span>
+            <Button onClick={logoutCallback}>Logout</Button>
           </div>
         ) : (
           <Button>

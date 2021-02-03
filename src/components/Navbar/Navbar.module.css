@@ -10,3 +10,9 @@
 .loginBlock {
   color: aliceblue;
 }
+
+.login {
+  color: aliceblue;
+  margin-left: 10px;
+  margin-right: 10px;
+}

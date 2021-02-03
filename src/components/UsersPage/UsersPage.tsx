@@ -6,7 +6,7 @@ import {getIsFetching} from "../../redux/users-selectors";
 import { useSelector} from 'react-redux'
 
 type UsersPageTypeProps ={}
-export const UsersPage: React.FC<UsersPageTypeProps> = () => {
+ const UsersPage: React.FC<UsersPageTypeProps> = () => {
 
    const isFetching = useSelector(getIsFetching)
    
@@ -19,3 +19,5 @@ return (
  </>
  )
 }
+
+export default UsersPage
