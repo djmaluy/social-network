@@ -1,7 +1,9 @@
 import { Button } from 'antd'
 import React, { useEffect, useState} from 'react'
-
-const wsChannel = new WebSocket('wss://social-network.samuraijs.com/handlers/ChatHandler.ashx')
+import { useDispatch} from 'react-redux'
+import { sendMessage, startMessagesListerning, stopMessagesListerning } from '../../redux/chat-reducer'
+import { getChatMessages } from '../../redux/chat-selectors'
+import { useSelector } from 'react-redux'
 
 export type ChatMessageType = {
   message: string
@@ -19,24 +21,28 @@ const ChatPage: React.FC = () => {
 }
 
 const Chat: React.FC = () => {
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(startMessagesListerning());
+    return () => {
+      dispatch(stopMessagesListerning());
+    }
+  }, [])
+
   return(
     <>
-      <ChatMessages />
+      <ChatMessages  />
       <ChatAddMessageForm />
     </>
   )
 }
 
-const ChatMessages: React.FC = () => {
+const ChatMessages: React.FC<{}> = () => {
 
-const [messages, setMessages] = useState<ChatMessageType[]>([])
+  const messages = useSelector(getChatMessages)
 
-  useEffect( () => {
-    wsChannel.addEventListener('message', (e: MessageEvent) => {
-      let newMessages = JSON.parse(e.data)
-      setMessages((prevMessages) => ([...prevMessages, ...newMessages]));
-    })
-  }, []) 
   return (
     <div style={{ height: '400px', overflowY: "auto"}}>
       {messages.map( (m, index) => <Message key={index} message={m} />)}
@@ -56,17 +62,19 @@ const Message: React.FC<{message: ChatMessageType}> = ({message}) => {
   )   
 }
 
-const ChatAddMessageForm: React.FC = () => {
+const ChatAddMessageForm:  React.FC<{}> = () => {
+  
+  const [message, setMessage] = useState('')
+  const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending')
+  const dispatch = useDispatch()
 
-const [message, setMessage] = useState('')
-
-const sendMessage = () => {
+  const sendMessageHandler = () => {
     if (!message) {
-    return
+      return
+    }
+    dispatch(sendMessage(message))
+    setMessage('')
   }
-  wsChannel.send(message)
-  setMessage('')
-}
 
   return (
     <div>
@@ -74,7 +82,7 @@ const sendMessage = () => {
         <textarea onChange={(e) => setMessage(e.currentTarget.value)} value={message} ></textarea>
       </div>
       <div>
-        <Button onClick={sendMessage}>Send</Button>
+        <Button disabled={false} onClick={sendMessageHandler}>Send</Button>
       </div>
     </div>
   )
