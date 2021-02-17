@@ -1,8 +1,8 @@
 import { Button } from 'antd'
-import React, { useEffect, useState} from 'react'
+import React, { useEffect, useState, useRef} from 'react'
 import { useDispatch} from 'react-redux'
 import { sendMessage, startMessagesListerning, stopMessagesListerning } from '../../redux/chat-reducer'
-import { getChatMessages } from '../../redux/chat-selectors'
+import { getChatMessages, getChatStatus } from '../../redux/chat-selectors'
 import { useSelector } from 'react-redux'
 
 export type ChatMessageType = {
@@ -21,7 +21,7 @@ const ChatPage: React.FC = () => {
 }
 
 const Chat: React.FC = () => {
-
+  const status = useSelector(getChatStatus)
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -32,22 +32,33 @@ const Chat: React.FC = () => {
   }, [])
 
   return(
-    <>
-      <ChatMessages  />
-      <ChatAddMessageForm />
-    </>
+    <div>
+      { status === 'error' && <div>Some error occured. Please refresh the page</div>}
+        <>
+          <ChatMessages  />
+          <ChatAddMessageForm />
+        </> 
+    </div>
   )
 }
 
 const ChatMessages: React.FC<{}> = () => {
-
+  const messagesAnchorRef = useRef<HTMLDivElement>(null)
   const messages = useSelector(getChatMessages)
 
+  useEffect(() => {
+    messagesAnchorRef.current?.scrollIntoView({behavior: "smooth"})    
+  }, [messages]);
+
   return (
-    <div style={{ height: '400px', overflowY: "auto"}}>
-      {messages.map( (m, index) => <Message key={index} message={m} />)}
-    </div>  
-  )
+      <>
+        <div style={{ height: '400px', overflowY: "auto"}}>
+          {messages.map( (m, index) => <Message key={index} message={m} />)}
+          <div ref={messagesAnchorRef}></div>
+        </div>  
+        
+      </>
+    )
 }
 
 const Message: React.FC<{message: ChatMessageType}> = ({message}) => {
@@ -63,9 +74,9 @@ const Message: React.FC<{message: ChatMessageType}> = ({message}) => {
 }
 
 const ChatAddMessageForm:  React.FC<{}> = () => {
-  
   const [message, setMessage] = useState('')
-  const [readyStatus, setReadyStatus] = useState<'pending' | 'ready'>('pending')
+
+  const status = useSelector(getChatStatus)
   const dispatch = useDispatch()
 
   const sendMessageHandler = () => {
@@ -82,7 +93,7 @@ const ChatAddMessageForm:  React.FC<{}> = () => {
         <textarea onChange={(e) => setMessage(e.currentTarget.value)} value={message} ></textarea>
       </div>
       <div>
-        <Button disabled={false} onClick={sendMessageHandler}>Send</Button>
+        <Button disabled={status !== 'ready'} onClick={sendMessageHandler}>Send</Button>
       </div>
     </div>
   )
