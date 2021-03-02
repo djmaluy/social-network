@@ -6,12 +6,14 @@ import {  usersAPI } from "../api/users-api";
 import { updateObjInArray } from "../utils/objectHelpers";
 import { ThunkAction } from 'redux-thunk';
 
+
 let initialState = {
   users: [] as Array<UsersType>,
   pageSize: 15,
   currentPage: 1,
   isFetching: false,
   totalUsersCount: 0, 
+  followingStart: [],
   filter: {
     term: '',
     friend: null as null | boolean
@@ -37,6 +39,15 @@ const usersReducer = (state = initialState, action: ActionTypes): InitialStateTy
         users: updateObjInArray(state.users, action.userId, "id", {
           followed: false,
         }),
+      };
+    }
+    case 'TOGGLE_FOLLOWING': { 
+      return {
+        ...state,
+        //@ts-ignore
+        followingStart: action.isFetching
+         ? [...state.followingStart, action.userId]
+         : [state.followingStart.filter(id => id !== action.userId)]
       };
     }
     case 'SET_USERS': {
@@ -85,6 +96,7 @@ export const actions = {
   setTotalUsersCount: (totalUsersCount: number) => ({type: 'SET_TOTAL_USERS_COUNT', totalUsersCount } as const),
   setCurrentPage: (currentPage: number) => ({type: 'SET_CURRENT_PAGE', currentPage } as const),
   setFilter: (filter: FilterType) => ({type: 'SET_FILTER', payload: filter } as const),
+  toggleFollowingStart: (isFetching: boolean, userId: number) => ({type:'TOGGLE_FOLLOWING', isFetching, userId } as const)
 }
 
 // type GetStateType = () => AppStateType
@@ -104,17 +116,24 @@ export const getUsers = (currentPage: number, pageSize: number, filter: FilterTy
   };
 };
 export const follow = (userId: number): ThunkType => async (dispatch) => {
+  //@ts-ignore
+  dispatch(actions.toggleFollowingStart(true, userId))
     const followData = await usersAPI.follow(userId);
-
     if (followData.resultCode === ResultCodesEnum.Success) {
       dispatch(actions.followSuccess(userId));
+      //@ts-ignore
+      dispatch(actions.toggleFollowingStart(false, userId))
     }
   };
 export const unfollow = (userId: number): ThunkType => async (dispatch) => {
+  //@ts-ignore
+    dispatch(actions.toggleFollowingStart(true, userId))
     const unfollowData = await usersAPI.unfollow(userId);
 
     if (unfollowData.resultCode === ResultCodesEnum.Success) {
-      dispatch(actions.unfollowSuccess(userId));
+      //@ts-ignore
+      dispatch(actions.unfollowSuccess(userId, userId));
+      dispatch(actions.toggleFollowingStart(false, userId))
     }
   };
 

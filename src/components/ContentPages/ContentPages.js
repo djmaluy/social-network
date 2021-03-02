@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import DialogsContainer from "../DialogsPage/DialogsContainer";
 import { Login } from "../Login/Login";
-import Music from "../MusicPage/Music";
+import { Music } from "../MusicPage/Music";
 import { News } from "../NewsPage/News";
 import PageNotFound from "../PageNotFound/PageNotFound";
 import { ProfileContainer } from "../ProfilePage/ProfileContainer";

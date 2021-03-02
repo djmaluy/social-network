@@ -26,4 +26,5 @@ export type UsersType = {
   status: string
   photos: PhotosType
   followed: boolean
+  followingStart: any
 }

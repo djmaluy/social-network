@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import userPhoto from "../../assets/images/userPhoto.png";
-import { FilterType, getUsers} from "../../redux/usersReducer";
+import { FilterType, getUsers, unfollow, follow} from "../../redux/usersReducer";
 import UsersSearchForm from "./UsersSearchForm";
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -10,6 +10,7 @@ import {
   getCurrentPage,
   getTotalUsersCount,
   getPageSize,
+  getFollowingStart,
  } from "../../redux/users-selectors";
  import ReactPaginate from "react-paginate";
 
@@ -22,14 +23,15 @@ export const Users: React.FC <UserProps> = (props) => {
   const pageSize = useSelector(getPageSize)
   const currentPage = useSelector(getCurrentPage)
   const filter = useSelector(getUsersFilter)
+  const followingStart = useSelector(getFollowingStart)
   
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const unfollow = (UserId: number) => {
+  const unfollowUser = (UserId: number) => {
     dispatch(unfollow(UserId))
   }
-  const follow = (UserId: number) => {
+  const followUser= (UserId: number) => {
     dispatch(follow(UserId))
   }
 
@@ -77,12 +79,13 @@ export const Users: React.FC <UserProps> = (props) => {
           </NavLink>
           <div>
             {u.followed ? (
-            <button onClick={() => { unfollow(u.id)}} >
+            <button  disabled={followingStart.some(id => id === u.id)} onClick={() => { unfollowUser(u.id)}} >
                 unFollow
               </button>
             ) : (
               <button
-                onClick={() => { follow(u.id) }} >
+                disabled={followingStart.some(id => id === u.id)}
+                onClick={() => { followUser(u.id) }} >
                 Follow
               </button>
             )}

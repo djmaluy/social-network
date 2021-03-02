@@ -16,7 +16,7 @@ export const Sidebar = () => {
     <Menu
       mode="inline"
       defaultSelectedKeys={["1"]}
-      // defaultOpenKeys={["sub1"]}
+      defaultOpenKeys={["sub1"]}
       style={{ height: "100%", borderRight: 0 }}
     >
       <Menu.Item key="1" icon={<UserOutlined />}>
@@ -28,11 +28,11 @@ export const Sidebar = () => {
       <Menu.Item key="3" icon={<UsergroupDeleteOutlined />}>
         <Link to="/users">Users</Link>
       </Menu.Item>
-      <Menu.Item key="4" icon={<NotificationOutlined />}>
-        <Link to="/news">News</Link>
-      </Menu.Item>
       <Menu.Item key="5" icon={<SoundOutlined />}>
         <Link to="/music">Music</Link>
+      </Menu.Item>
+      <Menu.Item key="4" icon={<NotificationOutlined />}>
+        <Link to="/news">News</Link>
       </Menu.Item>
       <Menu.Item key="6" icon={<WechatOutlined />}>
         <Link to="/chat">Chat</Link>
