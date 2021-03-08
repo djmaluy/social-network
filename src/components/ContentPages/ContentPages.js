@@ -21,13 +21,12 @@ export const ContentPages = () => {
       <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
       <Route path="/dialogs" render={() => <DialogsContainer />} />
       <Route path="/news" component={News} />
+      <Route path="/music" component={Music} />
+      <Route path="/login" component={Login} />
       <Suspense fallback={<div>Загрузка...</div>}>
         <Route path="/users" component={SuspenseUsersPage} />
         <Route path="/chat" component={SuspenseChatPage} />
       </Suspense>
-      <Route path="/music" component={Music} />
-      <Route path="/login" component={Login} />
-
       <Route component={PageNotFound} />
     </Switch>
   );

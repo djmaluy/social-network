@@ -6,13 +6,10 @@ import { getAuthorizedUserId } from "../../redux/auth-selectors";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
-// const setUsersProfile = actions.setUsersProfile;
-
-export const ProfileContainer = (props) => {
+export const ProfileContainer = () => {
   const authorizedUserId = useSelector(getAuthorizedUserId);
   const dispatch = useDispatch();
   const history = useParams();
-  console.log(history);
 
   const refreshProfile = () => {
     let userId = history.userId;
@@ -26,28 +23,5 @@ export const ProfileContainer = (props) => {
     refreshProfile();
   }, []);
 
-  return (
-    <Profile
-      isOwner={!history.userId}
-      // updateStatus={this.props.updateStatus}
-    />
-  );
+  return <Profile isOwner={!history.userId} />;
 };
-
-// let AuthRedirectComponent = withAuthRedirect(ProfileContainer);
-
-// const mapStateToProps = (state) => {
-//   return {
-//
-//     isAuth: state.auth.isAuth,
-//   };
-// };
-
-// export default compose(
-//   connect(mapStateToProps, {
-//     setUsersProfile,
-//     //     saveProfile,
-//   }),
-//   withRouter
-//   // withAuthRedirect
-// )(ProfileContainer);

@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
-import { NavLink, useHistory } from "react-router-dom";
-import userPhoto from "../../assets/images/userPhoto.png";
+import { useHistory } from "react-router-dom";
 import { FilterType, getUsers, unfollow, follow} from "../../redux/usersReducer";
 import UsersSearchForm from "./UsersSearchForm";
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,6 +12,7 @@ import {
   getFollowingStart,
  } from "../../redux/users-selectors";
  import ReactPaginate from "react-paginate";
+import { User } from "./User";
 
 type UserProps = {};
   
@@ -67,30 +67,12 @@ export const Users: React.FC <UserProps> = (props) => {
       />
       <UsersSearchForm onFilterChanged={onFilterChanged} />
       {users.map((u) => (
-        <div key={u.id}>
-          <p>{u.name}</p>
-          <p>{u.status}</p>
-          <NavLink to={"/profile/" + u.id}>
-            <img
-              className="usersPhoto"
-              src={u.photos.small || userPhoto}
-              alt=""
-            />
-          </NavLink>
-          <div>
-            {u.followed ? (
-            <button  disabled={followingStart.some(id => id === u.id)} onClick={() => { unfollowUser(u.id)}} >
-                unFollow
-              </button>
-            ) : (
-              <button
-                disabled={followingStart.some(id => id === u.id)}
-                onClick={() => { followUser(u.id) }} >
-                Follow
-              </button>
-            )}
-          </div>
-        </div>
+        <User 
+        user = {u} 
+        key={u.id} 
+        followingStart = {followingStart} 
+        unfollowUser = {unfollowUser} 
+        followUser = {followUser} />
       ))}
     </div>
   );

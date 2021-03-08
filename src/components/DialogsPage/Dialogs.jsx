@@ -8,10 +8,6 @@ import { maxLength, required } from "../../utils/validators";
 import { Element } from "../../common/FormsControl/FormControl";
 
 export const Dialogs = (props) => {
-  let onAddNewMessage = (values) => {
-    props.addMessage(values.newMessageText);
-  };
-
   let state = props.dialogsPage;
   let dialogs = state.dialogsData.map((d) => (
     <DialogItem name={d.name} id={d.id} key={d.id} />
@@ -19,6 +15,10 @@ export const Dialogs = (props) => {
   let messages = state.messagesData.map((m) => (
     <Message message={m.message} key={m.id} />
   ));
+
+  const onAddNewMessage = (values) => {
+    props.addMessage(values.newMessageText);
+  };
 
   return (
     <div className={classes.dialogsWrapper}>

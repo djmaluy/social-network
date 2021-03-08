@@ -109,31 +109,28 @@ export const getUsers = (currentPage: number, pageSize: number, filter: FilterTy
     dispatch(actions.setFilter(filter));
     dispatch(actions.setCurrentPage(currentPage))
     const data = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend);
-    
     dispatch(actions.toggleIsFetching(false));
     dispatch(actions.setUsers(data.items));
     dispatch(actions.setTotalUsersCount(data.totalCount / pageSize));
   };
 };
 export const follow = (userId: number): ThunkType => async (dispatch) => {
-  //@ts-ignore
+  
   dispatch(actions.toggleFollowingStart(true, userId))
     const followData = await usersAPI.follow(userId);
     if (followData.resultCode === ResultCodesEnum.Success) {
       dispatch(actions.followSuccess(userId));
-      //@ts-ignore
       dispatch(actions.toggleFollowingStart(false, userId))
     }
   };
 export const unfollow = (userId: number): ThunkType => async (dispatch) => {
-  //@ts-ignore
+  
     dispatch(actions.toggleFollowingStart(true, userId))
     const unfollowData = await usersAPI.unfollow(userId);
-
     if (unfollowData.resultCode === ResultCodesEnum.Success) {
       //@ts-ignore
-      dispatch(actions.unfollowSuccess(userId, userId));
-      dispatch(actions.toggleFollowingStart(false, userId))
+    dispatch(actions.unfollowSuccess(userId, userId));
+    dispatch(actions.toggleFollowingStart(false, userId))
     }
   };
 

@@ -1,6 +1,6 @@
 import { AppStateType } from './redux-store';
 
-// Селектор - это ф-я, которая принимает целиком State и возвращает какую-то часть
+// Селектор - это ф-я, которая принимает целиком State и возвращает какую-то его часть
 export const getAllUsers = (state: AppStateType) => {
   return state.usersPage.users;
 };

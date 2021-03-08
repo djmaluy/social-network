@@ -50,12 +50,6 @@ const profileReducer = (state = initialState, action: ActionsTypes): InitialStat
         status: action.status,
       };
     }
-    // case 'UPDATE_STATUS': {
-    //   return {
-    //     ...state,
-    //     status: action.status,
-    //   };
-    // }
     case 'SAVE_PHOTO_SUCCESS': {
       return {
         ...state,
