@@ -14,9 +14,8 @@ import {
  import ReactPaginate from "react-paginate";
 import { User } from "./User";
 
-type UserProps = {};
-  
-export const Users: React.FC <UserProps> = (props) => {
+type UserProps ={}
+const Users: React.FC <UserProps> = () => {
 
   const totalUsersCount = useSelector(getTotalUsersCount)
   const users = useSelector(getAllUsers)
@@ -77,3 +76,5 @@ export const Users: React.FC <UserProps> = (props) => {
     </div>
   );
 };
+
+export default Users

@@ -1,8 +1,16 @@
-import React from "react";
+import React, { FC } from "react";
 import { NavLink } from "react-router-dom";
 import userPhoto from "../../assets/images/userPhoto.png";
+import { UsersType } from "../../types/types";
 
-export const User = ({ user, unfollowUser, followUser, followingStart }) => {
+type PropsType = {
+  user: UsersType
+  unfollowUser: (userId: number) => void
+  followUser: (userId: number) => void
+  followingStart: Array<number>
+}
+
+export const User: FC<PropsType> = ({ user, unfollowUser, followUser, followingStart }) => {
   return (
     <div>
       <p>{user.name}</p>

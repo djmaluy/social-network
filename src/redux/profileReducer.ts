@@ -1,5 +1,5 @@
+import { ProfileType, PhotosType } from './../types/types';
 import { InferActionsTypes, BaseThunkType } from './redux-store';
-import { PhotosType, ProfileType } from './../../social-network/src/types/types';
 import { FormAction, stopSubmit } from "redux-form";
 import {  ResultCodesEnum } from "../api/api";
 import { profileAPI } from "../api/profile-api";
@@ -18,7 +18,6 @@ let initialState = {
   profile: null as ProfileType | null,
   status: "",
   newPostText: ""
-
 };
 
 export type  InitialStateType = typeof initialState

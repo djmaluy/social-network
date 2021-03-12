@@ -1,6 +1,5 @@
-import { InferActionsTypes } from './redux-store';
-import { AppStateType } from './../../social-network/src/redux/redux-store';
-import { UsersType } from './../../social-network/src/types/types';
+import { UsersType } from './../types/types';
+import { InferActionsTypes, AppStateType } from './redux-store';
 import { ResultCodesEnum } from "../api/api";
 import {  usersAPI } from "../api/users-api";
 import { updateObjInArray } from "../utils/objectHelpers";
@@ -84,8 +83,6 @@ const usersReducer = (state = initialState, action: ActionTypes): InitialStateTy
       return state;
   }
 };
-
-
 
 /* Action creators & types */
 export const actions = {

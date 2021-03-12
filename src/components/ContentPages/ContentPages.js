@@ -14,20 +14,20 @@ const SuspenseUsersPage = React.lazy(() =>
 
 export const ContentPages = () => {
   return (
-    <Switch>
-      <Route exact path="/">
-        <Redirect to="/profile" />
-      </Route>
-      <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
-      <Route path="/dialogs" render={() => <DialogsContainer />} />
-      <Route path="/news" component={News} />
-      <Route path="/music" component={Music} />
-      <Route path="/login" component={Login} />
-      <Suspense fallback={<div>Загрузка...</div>}>
+    <Suspense fallback={<div>Загрузка...</div>}>
+      <Switch>
+        <Route exact path="/">
+          <Redirect to="/profile" />
+        </Route>
+        <Route path="/profile/:userId?" render={() => <ProfileContainer />} />
+        <Route path="/dialogs" render={() => <DialogsContainer />} />
+        <Route path="/news" component={News} />
+        <Route path="/music" component={Music} />
+        <Route path="/login" component={Login} />
         <Route path="/users" component={SuspenseUsersPage} />
         <Route path="/chat" component={SuspenseChatPage} />
-      </Suspense>
-      <Route component={PageNotFound} />
-    </Switch>
+        <Route component={PageNotFound} />
+      </Switch>
+    </Suspense>
   );
 };

@@ -50,6 +50,9 @@ const AddNewPost = (props) => {
         />
       </div>
       <button>Add post</button>
+      <span>1</span>
+
+      <span>2</span>
     </form>
   );
 };
