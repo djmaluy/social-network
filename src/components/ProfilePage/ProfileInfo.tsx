@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getProfile, getStatus } from "../../redux/profile-selectors";
 import { savePhoto, saveProfile } from "../../redux/profileReducer";
 import { ProfileDataItems } from "./ProfileDataItems";
-import { ContactsType, ProfileType } from "../../types/types";
+
 
 type PropsType = {
   isOwner: boolean

@@ -14,6 +14,7 @@ import {
  import ReactPaginate from "react-paginate";
 import { User } from "./User";
 
+
 type UserProps ={}
 const Users: React.FC <UserProps> = () => {
 
@@ -55,7 +56,18 @@ const Users: React.FC <UserProps> = () => {
 
   return (
     <div>
-       <ReactPaginate
+      <UsersSearchForm onFilterChanged={onFilterChanged} />
+      <div className='cards'>
+        {users.map((u) => (
+        <User 
+          user = {u} 
+          key={u.id} 
+          followingStart = {followingStart} 
+          unfollowUser = {unfollowUser} 
+          followUser = {followUser} />
+        ))}
+      </div>
+      <ReactPaginate
         breakLabel={"..."}
         pageCount={totalUsersCount}
         marginPagesDisplayed={4}
@@ -64,15 +76,6 @@ const Users: React.FC <UserProps> = () => {
         containerClassName={"pagination"}
         activeClassName={"active"}
       />
-      <UsersSearchForm onFilterChanged={onFilterChanged} />
-      {users.map((u) => (
-        <User 
-        user = {u} 
-        key={u.id} 
-        followingStart = {followingStart} 
-        unfollowUser = {unfollowUser} 
-        followUser = {followUser} />
-      ))}
     </div>
   );
 };

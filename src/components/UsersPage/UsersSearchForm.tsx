@@ -1,6 +1,7 @@
 import React from 'react'
 import { Formik, Form, Field } from 'formik';
 import { FilterType } from '../../redux/usersReducer';
+import './Users.css'
 
 
 type PropsType = {
@@ -27,13 +28,13 @@ const UsersSearchForm: React.FC<PropsType> = ( {onFilterChanged}) => {
      >
        {({ isSubmitting }) => (
          <Form>
-           <Field type="text" name="term" />
-           <Field as="select" name="color">
+           <Field type="text" name="term" className="input-search" placeholder = "Search" />
+           <Field as="select" name="color" className = 'select-css'>
              <option value="null">All users</option>
              <option value="true">Only followed</option>
              <option value="false">Only unfollowed</option>
            </Field>
-           <button type="submit" disabled={isSubmitting}>
+           <button className='form-button' type="submit" disabled={isSubmitting}>
              Find
            </button>
          </Form>
