@@ -10,7 +10,9 @@ const ProfileDataForm = ({ handleSubmit, profile, error }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div>
-        <button onClick={() => {}}>Save</button>
+        <button className={classes.formButton} onClick={() => {}}>
+          Save
+        </button>
       </div>
       {error && <div className={classes.formSummaryError}>{error}</div>}
       <div>

@@ -31,7 +31,7 @@ class App extends Component {
 
     return (
       <Layout>
-        <Header className="header">
+        <Header>
           <Navbar />
         </Header>
         <Layout>

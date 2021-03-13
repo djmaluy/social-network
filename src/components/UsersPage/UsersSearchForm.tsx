@@ -10,7 +10,7 @@ type PropsType = {
 
 const UsersSearchForm: React.FC<PropsType> = ( {onFilterChanged}) => {
 
-  const usersSearchFormValidate = (values: any) => {
+  const usersSearchFormValidate = () => {
     const errors = {};
      return errors;
   }
