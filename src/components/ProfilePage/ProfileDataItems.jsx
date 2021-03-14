@@ -10,12 +10,10 @@ export const ProfileDataItems = ({ profile }) => {
       <div>
         <b>Looking for a job: </b> {profile.lookingForAJob ? "yes" : "no"}
       </div>
-
       <div>
         <b>My skills: </b>
         {profile.lookingForAJobDescription}
       </div>
-
       <div>
         <b>About me: </b> {profile.aboutMe}
       </div>

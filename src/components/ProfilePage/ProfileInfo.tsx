@@ -1,13 +1,14 @@
 import React, { FC, useState } from "react";
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatus/ProfileStatusWithHooks";
-import userPhoto from "../../assets/images/userPhoto.png";
 import classes from "./Profile.module.css";
 import ProfileDataForm from "./ProfileDataForm";
 import { useSelector, useDispatch } from "react-redux";
 import { getProfile, getStatus } from "../../redux/profile-selectors";
 import { savePhoto, saveProfile } from "../../redux/profileReducer";
 import { ProfileDataItems } from "./ProfileDataItems";
+import { ProfileAvatar } from "./ProfileAvatar";
+import { ChooseAvatarButton } from "./ChooseAvatarButton";
 
 
 type PropsType = {
@@ -38,51 +39,34 @@ const ProfileInfo: FC<PropsType> = ({ isOwner }) => {
   };
 
   return (
-    <div>
-      <div className={classes.contentHead}>
-          <div>
-            <div>
-              <img
-                src={profile.photos.large || userPhoto}
-                alt=""
-                className={classes.userAvatar}
+    <div className={classes.contentHead}>
+      <div>
+          <ProfileAvatar profile={profile}/>
+          <ChooseAvatarButton isOwner={isOwner} onMainPhotoSelected={onMainPhotoSelected} />
+      </div>
+      <div className={classes.statusEditForm}>
+        <div className={classes.profileStatusForm}>
+            <ProfileStatusWithHooks status={status} /> 
+            {editMode ? (
+            <ProfileDataForm
+              initialValues={profile}
+              //@ts-ignore
+              profile={profile}
+              onSubmit={onSubmit}
+            />
+            ) : (
+            <ProfileData
+              profile={profile}
+              isOwner={isOwner}
+              goToEditMode={() => {
+              setEditMode(true);
+             }}
               />
-            </div>
-            <div>
-              {
-              isOwner && <div className={classes.chooseAvatar}>
-                            <input type="file" 
-                                   onChange={onMainPhotoSelected} 
-                                   name="file" id="file"
-                                   className={classes.inputfile} />
-                            <label htmlFor="file">Change avatar</label>
-              </div>
-              }
-            </div>
-          </div>
-          <div className={classes.statusEditForm}>
-            <div className={classes.profileStatusForm}>
-              <ProfileStatusWithHooks status={status} /> 
-                  {editMode ? (
-                    <ProfileDataForm
-                      initialValues={profile}
-                      //@ts-ignore
-                      profile={profile}
-                      onSubmit={onSubmit}
-                    />
-                  ) : (
-                    <ProfileData
-                      profile={profile}
-                      isOwner={isOwner}
-                      goToEditMode={() => {
-                        setEditMode(true);
-                      }}
-                    />
-                  )}
-            </div>
+            )}
         </div>
       </div>
-  </div>
+    </div>
+    
   );
 };
 

@@ -16,7 +16,7 @@ import { User } from "./User";
 
 
 type UserProps ={}
-const Users: React.FC <UserProps> = () => {
+const Users: React.FC <UserProps> = React.memo(() => {
 
   const totalUsersCount = useSelector(getTotalUsersCount)
   const users = useSelector(getAllUsers)
@@ -78,6 +78,6 @@ const Users: React.FC <UserProps> = () => {
       />
     </div>
   );
-};
+});
 
 export default Users
